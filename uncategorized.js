@@ -114,3 +114,25 @@ const uncategorized347 = () => {
     while( k-- ) mostFrequent.push(frequentArray.shift()[0]);
     return mostFrequent
 }
+/* 5. Longest Palindromic Substring
+Given a string s, return the longest palindromic substring in s.
+*/
+const uncategorized5 = () => {
+    let longestString = ""
+    
+    for(let i = 0; i < s.length; i++) {
+        expandMiddle(i,i)
+        expandMiddle(i, i + 1)
+    }
+    return longestString;
+
+    function expandMiddle (left , right) { 
+        while(s[right] === s[left] && s[right] !== undefined) {
+            left--
+            right++
+        
+        }
+        let wordCheck = s.slice(left + 1, right)
+        longestString = longestString.length > wordCheck.length ? longestString : wordCheck
+    }
+}
