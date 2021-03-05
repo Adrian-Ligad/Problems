@@ -2,7 +2,7 @@
     Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 */
 
-const uncategorized293 = () => {
+const uncategorized293 = (nums) => {
     let curPointer = 0, slowPointer = 0;
     while(curPointer !== nums.length) {
         if(nums[curPointer] !== 0) {
@@ -22,7 +22,7 @@ But for multiples of three it should output “Fizz” instead of the number
 and for the multiples of five output “Buzz”. For numbers which are multiples of both three and five output “FizzBuzz”.
 */
 
-const uncategorized412 = () => {
+const uncategorized412 = (n) => {
     if(n < 1) return []
     let result = []
     for(let i = 1; i <= n; i++) {
@@ -39,7 +39,7 @@ const uncategorized412 = () => {
 Given a string, find the first non-repeating character in it and return its index. If it doesn't exist, return -1.
 */
 
-const uncategorized387 = () => {
+const uncategorized387 = (s) => {
     let uniqueCharMap = new Map();
     let repeatCharMap = new Map();
     for(let i = 0; i < s.length; i++) {
@@ -60,7 +60,7 @@ Given an integer n, return true if it is a power of three. Otherwise, return fal
 An integer n is a power of three, if there exists an integer x such that n == 3x.
 */
 
-const uncategorized326 = () => {
+const uncategorized326 = (n) => {
     if(n === 0) return false
     let number = n
     while(number % 3 === 0 ) number = number / 3
@@ -73,7 +73,7 @@ Do not allocate extra space for another array, you must do this by modifying the
 You may assume all the characters consist of printable ascii characters.
 */
 
-const uncategorized344 = () => {
+const uncategorized344 = (s) => {
     for (let i = 0; i < s.length/2; i++) {
         let indexHolder = s[i]
         s[i] = s[s.length - i - 1]
@@ -85,7 +85,7 @@ const uncategorized344 = () => {
 Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
 */
 
-const uncategorized268 = () => {
+const uncategorized268 = (nums) => {
     nums.push(true);
     for(let i = 0; i < nums.length; i++) {
         let indexNumber = nums[i];
@@ -106,7 +106,7 @@ const uncategorized268 = () => {
 Given a non-empty array of integers, return the k most frequent elements.
 */
 
-const uncategorized347 = () => {
+const uncategorized347 = (nums) => {
     let mostFrequent = [], frequentMap = {}, frequentArray = [];
     for(let num of nums) if (!++frequentMap[num]) frequentMap[num] = 0;
     for(let number in frequentMap) frequentArray.push([ number , frequentMap[number] ]);
@@ -117,7 +117,7 @@ const uncategorized347 = () => {
 /* 5. Longest Palindromic Substring
 Given a string s, return the longest palindromic substring in s.
 */
-const uncategorized5 = () => {
+const uncategorized5 = (s) => {
     let longestString = ""
     
     for(let i = 0; i < s.length; i++) {
@@ -135,4 +135,19 @@ const uncategorized5 = () => {
         let wordCheck = s.slice(left + 1, right)
         longestString = longestString.length > wordCheck.length ? longestString : wordCheck
     }
+}
+
+/* 121. Best Time to Buy and Sell Stock
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+*/
+
+const uncategorized121 = (prices) => {
+    let minPrice, maxProf
+    for(let i = 0; i < prices.length; i++) {
+        if(minPrice === undefined || prices[i] < minPrice) minPrice = prices[i];
+        else maxProf = prices[i] - minPrice > maxProf || !maxProf ? prices[i] - minPrice : maxProf;
+    }
+    return !maxProf ? 0 : maxProf;
 }
