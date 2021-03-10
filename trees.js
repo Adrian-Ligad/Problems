@@ -202,3 +202,61 @@ const tree113 = (root) => {
     };
     return pathSum(root)
 }
+
+/* Binary Tree level order Traversal
+Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+*/
+
+const tree102 = (root) => {
+    const result = []
+    if(!root) return result
+    let que = [root]
+    while(que.length > 0) {
+        const queL = que.length, level = []
+        for(let i = 0; i < queL; i++) {
+            let node = que.shift()
+            if(node.left) que.push(node.left)
+            if(node.right) que.push(node.right)
+            level.push(node.val)
+        }
+        result.push(level)
+    }
+    return result
+}
+
+/* 101. Symmetric Tree
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+*/
+
+var tree101 = (root) => {
+    const que = [root.left, root.right]
+    while(que.length > 0) {
+        let queLHalf = que.length/2, queVals = [], queValsReversed = []
+        for( let i = 0; i < queLHalf; i++) {
+            let node = que.shift()
+            if(node === null) {
+                queVals.push(null);
+                continue;
+            }
+            que.push(node.left)
+            que.push(node.right)
+            queVals.push(node.val)
+        }
+        for( let i = 0; i < queLHalf; i++) {
+            let node = que.shift()
+            if(node === null) {
+                queValsReversed.push(null);
+                continue;
+            }
+            que.push(node.right)
+            que.push(node.left)
+            queValsReversed.push(node.val)
+        }
+        let longest = Math.max(queVals.length, queValsReversed.length)
+        for(let j = 0; j < longest; j++) {
+            // console.log(queVals, queValsReversed)
+            if(queVals[j] !== queValsReversed[j]) return false
+        }
+    }
+    return true
+};

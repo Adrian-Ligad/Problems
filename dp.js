@@ -48,4 +48,5 @@ const dp62 = (m, n) => {
         if(!memo[row]) memo[row] = {}
         if(!memo[row][column]) memo[row][column] = downMemo + rightMemo
         return memo[row][column]
-}
+    }
+};

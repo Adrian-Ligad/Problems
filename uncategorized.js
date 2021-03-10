@@ -185,3 +185,151 @@ const uncategorized20 = (s) {
     }
     return stack.length === 0 ? true : false;
 }
+/*1768. Merge Strings Alternately
+You are given two strings word1 and word2. Merge the strings by adding letters in alternating order, starting with word1. 
+If a string is longer than the other, append the additional letters onto the end of the merged string.
+Return the merged string.
+*/
+var uncategorized1768 = (word1, word2) => {
+    let merged = ""
+    let shortest = Math.min(word1.length, word2.length)
+    for(let i = 0; i < shortest; i++) {
+        merged += word1[i] + word2[i]
+    }
+    let rest = word1.length > word2.length ? word1.slice(shortest) : word2.slice(shortest)
+    return merged + rest
+};
+
+/*794. Valid Tic-Tac-Toe State
+A Tic-Tac-Toe board is given as a string array board. Return True if and only if it is possible to reach this board 
+position during the course of a valid tic-tac-toe game.
+
+The board is a 3 x 3 array, and consists of characters " ", "X", and "O".  The " " character represents an empty square.
+
+Here are the rules of Tic-Tac-Toe:
+
+Players take turns placing characters into empty squares (" ").
+The first player always places "X" characters, while the second player always places "O" characters.
+"X" and "O" characters are always placed into empty squares, never filled ones.
+The game ends when there are 3 of the same (non-empty) character filling any row, column, or diagonal.
+The game also ends if all squares are non-empty.
+No more moves can be played if the game is over.
+*/
+
+var uncategorized794 = (board) => {
+    let result = checkNum()
+    let [ xCount, oCount ] = result
+    return checkWins(xCount, oCount)
+    
+    function checkWins(xCount, oCount) {
+        if (oCount > xCount || xCount > oCount + 1) return false
+        const isCheckRow = checkRow()
+        const isCheckColumn = checkColumn()
+        const isCheckDiag = checkDiag()
+        if(!isCheckRow || !isCheckColumn) return false
+        if(isCheckRow[0] === "X" || isCheckColumn[0] === "X" ) {
+            if(xCount === oCount) return false
+        }
+        if(isCheckDiag === "O") {
+            if(xCount !== oCount) return false
+        }
+        if(isCheckDiag === "X") {
+            if(xCount <= oCount) return false
+        }
+        return true
+    }
+    
+    function checkRow() {
+        let xStreakAmount = 0, oStreakAmount = 0
+        for(let i = 0; i < 3; i++) {
+            let xStreak = 0, oStreak = 0 
+            for(let j = 0; j < 3; j++) {
+                if(board[i][j] === "X") xStreak++
+                if(board[i][j] === "O") oStreak++
+            }
+            if(xStreak === 3) xStreakAmount++
+            if(oStreak === 3) oStreakAmount++
+        }
+        if(xStreakAmount && oStreakAmount) return false
+        return xStreakAmount > 0 ? ["X", xStreakAmount] : oStreakAmount > 0 ? ["O", oStreakAmount]   : true      
+    }
+    function checkColumn() {
+        let xStreakAmount = 0, oStreakAmount = 0
+        for(let i = 0; i < 3; i++) {
+            let xStreak = 0, oStreak = 0 
+            for(let j = 0; j < 3; j++) {
+                if(board[j][i] === "X") xStreak++
+                if(board[j][i] === "O") oStreak++
+            }
+            if(xStreak === 3) xStreakAmount++
+            if(oStreak === 3) oStreakAmount++
+        }
+        if(xStreakAmount && oStreakAmount) return false
+        return xStreakAmount > 0 ? ["X", xStreakAmount] : oStreakAmount > 0 ? ["O", oStreakAmount]   : true      
+    }
+    
+    function checkDiag() {
+        let xStreak = 0, oStreak = 0, i = 0, j = 0
+        while(i < 3) {
+            if(board[i][j] === "X") xStreak++
+            if(board[i][j] === "O") oStreak++
+            i++
+            j++
+        }
+        if(xStreak === 3) return "X"
+        if(oStreak === 3) return "O"
+        xStreak = 0, oStreak = 0, i = 0, j = 2
+        while(i < 3) {
+            if(board[i][j] === "X") xStreak++
+            if(board[i][j] === "O") oStreak++  
+            i++
+            j--
+        }
+        if(xStreak === 3) return "X"
+        if(oStreak === 3) return "O"
+    }
+    
+    function checkNum(xCounter = 0, oCounter = 0) {
+        for(let i = 0; i < 3; i++) {
+            for(let j = 0; j < 3; j++) {
+                if (board[i][j] === "X") xCounter++
+                if(board[i][j] === "O") oCounter++
+            }
+        }
+        return [xCounter, oCounter]
+    }
+};
+
+/*1518. Water Bottles
+Given numBottles full water bottles, you can exchange numExchange empty water bottles for one full water bottle.
+The operation of drinking a full water bottle turns it into an empty bottle.
+Return the maximum number of water bottles you can drink
+*/
+
+var uncategorized1518 = (numBottles, numExchange) => {
+    let numBottlesLeft = numBottles, remainder = 0, numBottlesDrank = 0
+    while(numBottlesLeft > 0) {
+        let curRemainder = (numBottlesLeft+ remainder) % numExchange
+        numBottlesDrank += numBottlesLeft
+        numBottlesLeft = Math.floor((numBottlesLeft + remainder)/numExchange)
+        remainder = curRemainder
+        
+    }
+    return numBottlesDrank
+};
+
+/*392. Is Subsequence
+Given two strings s and t, check if s is a subsequence of t.
+A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without 
+disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).
+*/
+
+var uncategorized392 = (s, t) => {
+    let sPointer = 0
+    let tPointer = 0
+    while(tPointer < t.length) {
+        if(s[sPointer] === t[tPointer]) sPointer++
+        tPointer++
+    }
+    return sPointer === s.length ? true : false; 
+};
